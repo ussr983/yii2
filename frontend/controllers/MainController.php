@@ -20,8 +20,7 @@ class MainController extends BehaviorsController
     public $layout = 'basic';
     public $defaultAction = 'index';
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $hello = 'Привет МИР!!!';
 
         return $this->render(
@@ -86,8 +85,7 @@ class MainController extends BehaviorsController
         );
     }
 
-    public function actionActivateAccount($key)
-    {
+    public function actionActivateAccount($key) {
         try {
             $user = new AccountActivation($key);
         }
@@ -132,8 +130,7 @@ class MainController extends BehaviorsController
         );
     }
 
-    public function actionSearch()
-    {
+    public function actionSearch() {
         $search = Yii::$app->session->get('search');
         Yii::$app->session->remove('search');
 
@@ -157,8 +154,7 @@ class MainController extends BehaviorsController
         );
     }
 
-    public function actionSendEmail()
-    {
+    public function actionSendEmail() {
         $model = new SendEmailForm();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -177,8 +173,7 @@ class MainController extends BehaviorsController
         ]);
     }
 
-    public function actionResetPassword($key)
-    {
+    public function actionResetPassword($key) {
         try {
             $model = new ResetPasswordForm($key);
         }

@@ -28,6 +28,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+          'class' => 'yii\web\UrlManager',
+          'enablePrettyUrl' => true,
+          'showScriptName' => true,
+          
+        ]
     ],
     'params' => $params,
 ];

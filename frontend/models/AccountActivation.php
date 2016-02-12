@@ -16,7 +16,7 @@ use Yii;
 
 class AccountActivation extends Model
 {
-    /* @var $user \app\models\User */
+    /* @var $user \frontend\models\User */
     private $_user;
 
     public function __construct($key, $config = [])

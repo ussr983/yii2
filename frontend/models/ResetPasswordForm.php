@@ -17,22 +17,19 @@ class ResetPasswordForm extends Model
     public $password;
     private $_user;
 
-    public function rules()
-    {
+    public function rules() {
         return [
             ['password', 'required']
         ];
     }
 
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'password' => 'Пароль'
         ];
     }
 
-    public function __construct($key, $config = [])
-    {
+    public function __construct($key, $config = []) {
         if(empty($key) || !is_string($key))
             throw new InvalidParamException('Ключ не может быть пустым.');
         $this->_user = User::findBySecretKey($key);
@@ -41,8 +38,7 @@ class ResetPasswordForm extends Model
         parent::__construct($config);
     }
 
-    public function resetPassword()
-    {
+    public function resetPassword() {
         /* @var $user User */
         $user = $this->_user;
         $user->setPassword($this->password);

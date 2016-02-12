@@ -5,7 +5,7 @@
  * @author ari
  * 
  *@var $this yii\veb\Viev
- * @var $usser app\models\User
+ * @var $usser frontend\models\User
  */
 
 use yii\helpers\Html;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SendEmailForm */
+/* @var $model frontend\models\SendEmailForm */
 /* @var $form ActiveForm */
 ?>
 <div class="main-sendEmail">
