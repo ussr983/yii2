@@ -19,7 +19,10 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "dmstr/yii2-adminlte-asset": "*",
-        "evgeniyrru/yii2-slick": "*"
+        "evgeniyrru/yii2-slick": "*",
+        "yiisoft/yii2-imagine": "^2.0",
+        "codeception/codeception": "^2.1",
+        "mihaildev/yii2-ckeditor": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

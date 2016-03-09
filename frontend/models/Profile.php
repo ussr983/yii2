@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "user".
@@ -31,23 +32,24 @@ class Profile extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName() {
-        return 'user';
-    }
+  
+  public static function tableName() {
+      return 'user';
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules() {
-        return [
-            [['username', 'firstname', 'lastname', 'phone', 'sex', 'birthday'], 'required'],
-            [['birthday'], 'safe'],
-            [['status','group_id'], 'integer'],
-            [['username', 'firstname', 'lastname', 'email', 'phone', 'sex'], 'string', 'max' => 255],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
-        ];
-    }
+  /**
+   * @inheritdoc
+   */
+  public function rules() {
+      return [
+          [['username', 'firstname', 'lastname', 'phone', 'sex', 'birthday'], 'required'],
+          [['birthday'], 'safe'],
+          [['status','group_id'], 'integer'],
+          [['username', 'firstname', 'lastname', 'email', 'phone', 'sex'], 'string', 'max' => 255],
+          [['username'], 'unique'],
+          [['email'], 'unique'],
+      ];
+  }
 
     /**
      * @inheritdoc
@@ -68,18 +70,22 @@ class Profile extends ActiveRecord
     public function updateProfile() {
         $profile = ($profile = Profile::findOne($this->id)) ? $profile : new Profile();
         $profile->id = $this->id;
+        $profile->username = $this->username;
         $profile->firstname = $this->firstname;
-        $profile->secondname = $this->lastname;
+        $profile->lastname = $this->lastname;
         $profile->phone = $this->phone;
         $profile->birthday = $this->birthday;
         $profile->sex = $this->sex;
+        return $profile->save() ? true : false;
         
-        if($profile->save()){
-            $user = $this->user ? $this->user : User::findOne($this->id);
-            $username = Yii::$app->request->post('User')['username'];
-            $user->username = isset($username) ? $username : $this->username;
-            return $user->save() ? true : false;
-        }
-        return false;
+//        if($profile->save()){
+//            $user = $this->user ? $this->user : User::findOne($this->id);
+//            $username = Yii::$app->request->post('User')['username'];
+//            $user->username = isset($username) ? $username : $this->username;
+//            return $user->save() ? true : false;
+//        }
+//        return false;
     }
+    
+    
 }

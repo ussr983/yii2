@@ -1,53 +1,170 @@
 <?php
+/* @var $this yii\web\View
+ * @var $hello string */
 
-/* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use evgeniyrru\yii2slick\Slick;
+use app\components\MeeWidget;
+use yii\bootstrap\Modal;
+use yii\jui\DatePicker;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+use yii\web\JsExpression;
 ?>
-<div class="site-index">
+<h1>main/index</h1>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+<p>
+    <?php echo $hello ?>
+</p>
+<div class="panel panel-default">
+   <?php echo Slick::widget([
+        // HTML tag for container. Div is default.
+        'itemContainer' => 'div',
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        // HTML attributes for widget container
+        'containerOptions' => ['class' => 'panel-body'],
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+        // Items for carousel. Empty array not allowed, exception will be throw, if empty 
+        'items' => [
+            Html::img('@web/img/gallery/112856.jpg'),
+            Html::img('@web/img/gallery/112857.jpg'),
+            Html::img('@web/img/gallery/112858.jpg'),
+            Html::img('@web/img/gallery/112859.jpg'),
+            Html::img('@web/img/gallery/112860.jpg'),
+            Html::img('@web/img/gallery/112861.jpg'),
+        ],
 
-    <div class="body-content">
+        // HTML attribute for every carousel item
+        'itemOptions' => ['class' => 'autoplay'],
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        // settings for js plugin
+        // @see http://kenwheeler.github.io/slick/#settings
+        'clientOptions' => [
+            'arrows' => true,
+            'dots'     => true,
+            'speed'    => 300,
+            'autoplay' => true,
+            'infinite' => false,
+            'slidesToShow' => 4,
+            'slidesToScroll' => 4,
+            // note, that for params passing function you should use JsExpression object
+            'onAfterChange' => new JsExpression('function() {console.log("The cat has shown")}'),
+            'responsive' => [
+                        [
+                            'breakpoint'=> 1024,
+                              'settings'=> [
+                                  'speed' => 200,
+                                  'lazyLoad' => 'ondemand',
+                              ]
+                        ]
+                    ],
+        ],
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+    ]); ?>
+</div>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+<div class="panel panel-default">
+  
+    <?php
+        ActiveForm::begin(
+            [
+                'action' => ['site/search'],
+                'method' => 'get',
+                'options' => [
+                    'class' => 'panel-body'
+                ]
+            ]
+        );
+        echo '<div class="input-group input-group-sm">';
+        echo Html::input(
+            'type: text',
+            'search',
+            '',
+            [
+                'placeholder' => 'Найти ...',
+                'class' => 'form-control'
+            ]
+        );
+        echo '<span class="input-group-btn">';
+        echo Html::submitButton(
+            '<span class="glyphicon glyphicon-search"></span>',
+            [
+                'class' => 'btn btn-success',
+//                'onClick' => 'window.location.href = this.form.action + "-" + this.form.search.value.replace(/[^\w\а-яё\А-ЯЁ]+/g, "_") + ".html";'
+            ]
+        );
+        echo '</span></div>';
+        ActiveForm::end();
+        ?>
+</div>
+<div class="panel panel-default">
+      <?php ActiveForm::begin(
+            [
+                'action' => ['site/filter'],
+                'method' => 'get',
+                'options' => [
+                    'class' => 'panel-body'
+                ]
+            ]
+        );
+        echo '<div class="col-12">';
+        echo '<div class="form-group">';
+        echo Html::input(
+            'type: text',
+            'category',
+            '',
+            [
+                'placeholder' => 'Рубрика ...',
+                'class' => 'form-control'
+            ]
+        );
+        echo '</div>';
+        echo '<div class="form-group">';
+        echo Html::input(
+            'type: text',
+            'sity',
+            '',
+            [
+                'placeholder' => 'Город ...',
+                'class' => 'form-control'
+            ]
+        );
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="col-12">';
+        echo '<div class="col-5 form-group">';
+        echo Html::input(
+            'type: text',
+            'region',
+            '',
+            [
+                'placeholder' => 'Район ...',
+                'class' => 'form-control'
+            ]
+        );
+        echo '</div>';
+        echo '<div class="col-5 form-group">';
+        echo Html::input(
+            'type: text',
+            'street',
+            '',
+            [
+                'placeholder' => 'Улица ...',
+                'class' => 'form-control'
+            ]
+        );
+        echo '</div>';
+        echo '</div>';
+        echo '<span class="input-btn">';
+        echo Html::submitButton(
+            'Найти <span class="glyphicon glyphicon-search"></span>',
+            [
+                'class' => 'btn',
+//                'onClick' => 'window.location.href = this.form.action + "-" + this.form.search.value.replace(/[^\w\а-яё\А-ЯЁ]+/g, "_") + ".html";'
+            ]
+        );
+        echo '</span></div>';
+        ActiveForm::end();
+        ?>
 </div>

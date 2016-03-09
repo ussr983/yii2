@@ -19,12 +19,12 @@ AppAsset::register($this);
 $this->beginPage();
 ?>
     <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>">
+    <html lang="<?php echo Yii::$app->language ?>">
     <head>
-        <?= Html::csrfMetaTags() ?>
-        <meta charset="<?= Yii::$app->charset ?>">
+        <?php echo Html::csrfMetaTags() ?>
+        <meta charset="<?php echo Yii::$app->charset ?>">
         <?php $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']); ?>
-        <title><?= Yii::$app->name ?></title>
+        <title><?php echo Yii::$app->name ?></title>
         <?php $this->head() ?>
     </head>
     <body>
@@ -44,7 +44,7 @@ $this->beginPage();
                 ],
                 'brandLabel' => '<img src="'.\Yii::$app->request->BaseUrl.'/img/logo.png"/>',
                 'brandUrl' => [
-                    '/main/index'
+                    '/site/index'
                 ],
                 'brandOptions' => [
                     'class' => 'navbar-brand'
@@ -59,10 +59,10 @@ $this->beginPage();
                         data-toggle="popover"
                         data-trigger="focus"
                         data-placement="bottom"
-                        data-title="<?= Yii::$app->user->identity['username'] ?>"
+                        data-title="<?php echo Yii::$app->user->identity['username'] ?>"
                         data-content="
-                            <a href='<?= Url::to(['/main/profile']) ?>' data-method='post'>Мой профиль</a><br>
-                            <a href='<?= Url::to(['/main/logout']) ?>' data-method='post'>Выход</a>
+                            <a href='<?php echo Url::to(['/site/profile']) ?>' data-method='post'>Мой профиль</a><br>
+                            <a href='<?php echo Url::to(['/site/logout']) ?>' data-method='post'>Выход</a>
                         ">
                     <span class="glyphicon glyphicon-user"></span>
                 </button>
@@ -72,18 +72,18 @@ $this->beginPage();
         $menuItems = [
             [
                 'label' => 'О проекте <span class="glyphicon glyphicon-question-sign"></span>',
-                'url' => ['/main/about']
+                'url' => ['/site/about']
             ],
         ];
 
         if (Yii::$app->user->isGuest):
             $menuItems[] = [
                 'label' => 'Регистрация',
-                'url' => ['/main/registration']
+                'url' => ['/site/registration']
             ];
             $menuItems[] = [
                 'label' => 'Войти',
-                'url' => ['/main/login']
+                'url' => ['/site/login']
             ];
         endif;
 
@@ -136,15 +136,15 @@ $this->beginPage();
         NavBar::end();
         ?>
         <div class="container">
-            <?= AlertWidget::widget() ?>
-            <?= $content ?>
+            <?php echo AlertWidget::widget() ?>
+            <?php echo $content ?>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container">
             <span class="badge">
-                <span class="glyphicon glyphicon-copyright-mark"></span> phpNT <?= date('Y') ?>
+                <span class="glyphicon glyphicon-copyright-mark"></span> phpNT <?php echo date('Y') ?>
             </span>
         </div>
     </footer>
